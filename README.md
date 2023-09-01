@@ -5,7 +5,7 @@
 ### Vzpostavitev razvojnega okolja
 
 - Maven
-- Java
+- Java >= 17
 - ...
 
 ### Zagon razvojne verzije

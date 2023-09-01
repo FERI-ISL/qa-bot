@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FAQ - Question answering bot.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FAQ - Question answering bot</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/grids-responsive-min.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <script type="text/javascript" type="module" src="/js/script.js"></script>
+</head>
+<body x-data="initApp">
+    <script type="text/javascript">
+        
+    </script>
+    <!-- import ONNXRuntime Web from CDN -->
+    <script type="module">
+        import Alpine from 'https://cdn.jsdelivr.net/npm/alpinejs@3.13.0/+esm';
+        import { env, pipeline } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.5.4';
+
+        import app from './js/script.js';
+        
+        window.Alpine = Alpine;
+        Alpine.plugin(app);
+        Alpine.start();
+    </script>
+
+    <div id="main">
+        <div class="header">
+            <h1>FAQ</h1>
+            <h2>Improved with question answering chatbot</h2>
+        </div>
+
+        <div class="content pure-g">
+            <div class="pure-u-1 pure-u-lg-1-2 bot-container">
+                <img src="https://images01.nicepage.com/a1389d7bc73adea1e1c1fb7e/2101f0b4d7fb507285c139ae/Untitled-3.png" alt="QA Bot image">
+                <div class="chat-container">
+                    <div class="pure-u-1 history">
+                    <ul class="chat">
+                        <template x-for="message in messages">
+                            <li class="message" x-bind:class="{'me': !message.isBot, 'bot': message.isBot}">
+                                <p x-text="message.text"></p>
+                            </li>
+                        </template>
+                    </ul>
+                </div>
+                    <!-- <input type="text" class="text_input" placeholder="Message..." /> -->
+                    <form class="pure-form pure-g">
+                        <textarea class="pure-input-1" rows="3" x-model="question"></textarea>
+                        <a class="send-button" @click="askQuestion()"></a>
+                    </form>
+                </div>
+            </div>
+            <div class="pure-u-1 pure-u-lg-1-2">
+                <template x-for="faq in faqs">
+                    <details class="faq__detail">
+                        <summary  class="faq__summary"><span class="faq__question" x-text="faq.question"></span></summary>
+                        <p class="faq__text" x-text="faq.answer"></p>
+                    </details>
+                </template>    
+            </div>
+        </div>
+    </div>
+</body>
+</html>
