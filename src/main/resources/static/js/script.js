@@ -1,4 +1,4 @@
-import { env, pipeline } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.5.4';
+import { env, pipeline } from "https://cdn.jsdelivr.net/npm/@xenova/transformers@2.5.4";
 
 const bodyTag = document.querySelector("html");
 
@@ -32,11 +32,17 @@ let fetchy = async (url, method = "GET", data = {}) => {
 
 export default function (Alpine) {
     Alpine.data("initApp", () => ({
-        async init() {
+        init() {
             console.log("init Alpine app");
             // load model
-            this.answerer = await pipeline('question-answering');
+            this.initModel();
+            // load faqs
             this.getFaqs();
+            this.writting = false;
+        },
+        async initModel() {
+            console.log("init model");
+            this.answerer = await pipeline("question-answering");
         },
         faqs: [],
         getFaqs() {
@@ -45,21 +51,28 @@ export default function (Alpine) {
             });
         },
         messages: [{text: "Hello, how can I help you?", isBot: true}],
+        scroll() {
+           document.getElementById("history").scrollTo(0, document.getElementById("history").scrollHeight, "smooth");
+        },
         question: "",
         async askQuestion() {
-            console.log(this.question);
             this.messages.push({text: this.question, isBot: false});
-            const contextList = await fetchy("/api/faq", "POST", {question: this.question});
+
+            let q = this.question;
+            this.question = "";
+
+            this.writting = true;
+
+            const contextList = await fetchy("/api/faq", "POST", {question: q});
             let context = "";
             for (const contextItem of contextList) {
                 context += contextItem.answer + " ";
             }
             
-            const answer = await this.answerer(this.question, context);
-            console.log(answer);
+            const answer = await this.answerer(q, context);
             this.messages.push({text: answer.answer, isBot: true});
-            this.question = "";
-            //console.log(answer);
+
+            this.writting = false;
         }
     }));
 }

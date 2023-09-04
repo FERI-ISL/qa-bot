@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
-import io.micrometer.core.ipc.http.HttpSender.Request;
 import jakarta.annotation.PostConstruct;
 import si.um.feri.vrbancic.sentence_similarity_example.models.Faq;
 import si.um.feri.vrbancic.sentence_similarity_example.models.QA;
@@ -29,12 +28,13 @@ public class FaqService {
     private FaqRepository faqRepository;
     @Autowired
     private QAEmbeddingService qaEmbeddingService;
+    private List<Faq> faqs = new ArrayList<>();
 
     @PostConstruct
     public void initializeDatabase() {
         if (faqRepository.findAll().isEmpty()) {
             // initialize database with some faqs
-            List<QA> csvList = getListOfQA(Path.of("src/main/resources/um_qa_eng.csv"), QA.class);
+            List<QA> csvList = getListOfQA(Path.of("src/main/resources/um_qa.csv"), QA.class);
 
             for (QA qa : csvList) {
                 System.out.println(qa.getQuestion() + "\n\t\t" + qa.getAnswer());
@@ -44,6 +44,9 @@ public class FaqService {
                 faqRepository.insert(faq);
             }
         }
+
+        // initialize faqs list
+        faqs = faqRepository.findAll();
     }
 
     private List<QA> getListOfQA(Path path, Class<? extends QA> clazz) {
@@ -60,15 +63,16 @@ public class FaqService {
     }
 
     public List<Faq> getAllFaq() {
-        return faqRepository.findAll();
+        return faqs;
     }
 
     public Faq save(Faq faq) {
-        return faqRepository.insert(faq);
+        faq = faqRepository.save(faq);
+        faqs.add(faq);
+        return faq;
     }
 
     public List<Faq> getMostSimilarFaqs(RequestFaq requestFaq) {
-        List<Faq> faqs = faqRepository.findAll();
         HashMap<Faq, Double> faqSimilarityMap = new HashMap<>();
 
         // embed question
