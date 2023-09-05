@@ -17,7 +17,7 @@ public class QAEmbeddingService {
                 Criteria.builder()
                         .setTypes(String.class, float[].class)
                         .optModelUrls("djl://ai.djl.huggingface.pytorch/sentence-transformers/all-MiniLM-L6-v2")
-                        //.optModelPath(Paths.get("src/main/resources/all-MiniLM-L6-v2"))
+                        //.optModelPath(Paths.get("path to model"))
                         //.optEngine("OnnxRuntime")
                         .optTranslatorFactory(new TextEmbeddingTranslatorFactory())
                         .optProgress(new ProgressBar())
@@ -27,7 +27,6 @@ public class QAEmbeddingService {
     public float[] embedQuestion(String question) {
         try (ZooModel<String, float[]> model = criteria.loadModel(); Predictor<String, float[]> predictor = model.newPredictor()) {
             float[] embeddedQuestion = predictor.predict(question);
-            System.out.println("Embedding: " + Arrays.toString(embeddedQuestion));
             return embeddedQuestion;
         } catch (Exception e) {
             e.printStackTrace();

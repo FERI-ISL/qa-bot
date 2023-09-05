@@ -63,6 +63,9 @@ public class FaqService {
     }
 
     public List<Faq> getAllFaq() {
+        if(faqs.isEmpty()) {
+            faqs = faqRepository.findAll();
+        }
         return faqs;
     }
 
@@ -78,10 +81,6 @@ public class FaqService {
         // embed question
         float[] questionEmbeddings = qaEmbeddingService.embedQuestion(requestFaq.getQuestion());
 
-        // calculate cosine similarity between question and all faqs
-        // double highestSimilarity = 0;
-        // Faq mostSimilarFaq = null;
-
         for (Faq faq : faqs) {
             double questionSimilarity = calculateCosineSimilarity(faq.getQuestionEmbeddings(), questionEmbeddings);
             double answerSimilarity = calculateCosineSimilarity(faq.getAnswerEmbeddings(), questionEmbeddings);
@@ -94,11 +93,6 @@ public class FaqService {
             }
 
             faqSimilarityMap.put(faq, faqSimilarity);
-
-            // if (faqSimilarity > highestSimilarity) {
-            //     highestSimilarity = faqSimilarity;
-            //     mostSimilarFaq = faq;
-            // }
         }
 
         List<Faq> mostSimilarFaqs = new ArrayList<>();
@@ -109,7 +103,6 @@ public class FaqService {
     }
 
     private double calculateCosineSimilarity(float[] vector1, float[] vector2) {
-        
         // convert float[] to double[
         double[] doubleVector1 = new double[vector1.length];
         double[] doubleVector2 = new double[vector2.length];
