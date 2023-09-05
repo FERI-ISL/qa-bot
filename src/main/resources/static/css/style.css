@@ -1,0 +1,248 @@
+body {
+    color: #777;
+}
+
+.header, .content {
+    padding-left: 2em;
+    padding-right: 2em;
+}
+
+.header {
+    color: #333;
+    text-align: center;
+}
+
+.header h1 {
+    margin: 0.2em 0;
+    font-size: 3em;
+    font-weight: 300;
+}
+
+.header h2 {
+    font-weight: 300;
+    color: #ccc;
+    padding: 0;
+    margin-top: 0;
+}
+
+.content {
+    margin-bottom: 50px;
+    line-height: 1.6em;
+}
+
+.content > .bot-container {
+    text-align: center;
+    height: 80vh;
+}
+
+.content > .bot-container > img {
+    width: 40%;
+}
+
+.content > .bot-container > .chat-container {
+    height: 50vh;
+}
+
+.content .bot-container > .chat-container > .input-form {
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 1px 3px #ddd;
+    margin: 1px;
+}
+
+.content > .bot-container > .chat-container > .history {
+    border-radius: 4px 4px 0 0;
+    box-shadow: inset 0 1px 3px #ddd;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+}
+
+.content > .bot-container > .chat-container > .history > .chat {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    list-style-type: none;
+    padding: 0.5em;
+    margin: 0;
+}
+
+.content > .bot-container > .chat-container > .history > .chat > .message {
+    background-color: #e5e5e9;
+    border-radius: 1em;
+    position: relative;
+    margin-bottom: 0.75em;
+    padding: 0.75em;
+}
+
+.content > .bot-container > .chat-container > .history > .chat > .message.bot {
+    color: #333
+}
+
+.content > .bot-container > .chat-container > .history > .chat > .message.me {
+    align-self: flex-end;
+    background-color: #00d548;
+    color: #f1f1f1
+}
+
+.content > .faq-container {
+    height: 100ch;
+    overflow: auto;
+}
+
+.message p {
+    margin: 0;
+}
+
+.pure-form textarea {
+    border: none;
+    border-radius: none;
+    box-shadow: none;
+    resize: none;
+}
+/* 
+textarea:focus, input:focus{
+    border-color: #00d548 !important;
+} */
+
+.text_input {
+    font-size: 16px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 15px;
+    width: 100%;
+    margin: 0.1em 0;
+}
+
+.send-button {
+    height: 2em;
+    width: 2em;
+    background-image: url(https://visualpharm.com/assets/163/Send%20Message-595b40b85ba036ed117daa36.svg);
+    background-size: cover;
+    background-color: transparent;
+    border: none;
+    position: relative;
+    display: inline-block;
+}
+.send-button:hover {
+    cursor: pointer;
+}
+
+.faq__detail {
+    border-bottom: 1px solid hsl(240, 5%, 91%);
+    margin: 2em 0 0 2em;
+    padding: 0.5em 0 2em 0;
+}
+
+.faq__summary:hover,
+.faq__summary:active { 
+    color: var(--orange);
+    cursor: pointer; 
+}
+
+.faq__detail[open] > .faq__summary { 
+    font-weight: 700;
+    line-height: 1em;
+    padding: 1em;
+}
+
+.faq__summary {
+    list-style: none;
+  }
+
+.faq__summary::-webkit-details-marker {
+    display: none;
+  }
+
+.faq__summary { 
+    display: block;
+    padding: 0;
+    position: relative;
+    text-align: right;
+}
+
+    
+.faq__summary:after {
+    display: inline-block;
+    content: url("https://bobmatyas.github.io/fm-faq-accordion/images/icon-arrow-down.svg");
+    background-repeat: no-repeat;
+    background-position: right center;
+    text-align: right;
+  }
+  
+details[open] .faq__summary:after {
+    display: inline-block;
+    width: 2em;
+    height: 0.5em;
+    content: "";
+    background-image: url("https://bobmatyas.github.io/fm-faq-accordion/images/icon-arrow-down.svg");
+    background-repeat: no-repeat;
+    background-position: center right;
+    transform:scaleY(-1);
+}
+  
+
+.faq__question {
+    left: 0;
+    position: absolute;
+    text-align: left;
+    top: 0;
+    width: 95%;
+    margin: 0.1em 0;
+    font-size: 16px;
+}
+
+.faq__summary {
+    color: var(--blue-dark);
+    font-size: 1.4rem; 
+}
+
+.faq__summary:focus {
+    color: var(--orange); 
+    font-weight: bold;
+    outline: none;
+}
+
+.faq__text {
+    color: var(--blue-mid);
+    font-size: var(--base-font-size);
+    line-height: 1.6;
+    margin: 1em 0 0 0;
+}
+
+#wave {
+    margin: 0 0.5em;
+    position: absolute;
+}
+ 
+#wave .dot {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    margin-right: 0.5px;
+    background: #60f;
+    animation: wave 1s linear infinite;
+    animation-delay: -0.9s;
+}
+
+#wave .dot.two {
+    animation-delay: -0.7s;
+}
+
+#wave .dot:nth-child(3) {
+    animation-delay: -0.6s;
+}
+  
+@keyframes wave {
+    0%,
+    60%,
+    100% {
+        transform: initial;
+    }
+    30% {
+        transform: translateY(-15px);
+    }
+} 
