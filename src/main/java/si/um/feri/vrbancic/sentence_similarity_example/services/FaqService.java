@@ -76,32 +76,11 @@ public class FaqService {
     }
 
     public List<Faq> getMostSimilarFaqs(RequestFaq requestFaq) {
-        HashMap<Faq, Double> faqSimilarityMap = new HashMap<>();
-
-        // embed question
-        float[] questionEmbeddings = qaEmbeddingService.embedQuestion(requestFaq.getQuestion());
-
-        for (Faq faq : faqs) {
-            double questionSimilarity = calculateCosineSimilarity(faq.getQuestionEmbeddings(), questionEmbeddings);
-            double answerSimilarity = calculateCosineSimilarity(faq.getAnswerEmbeddings(), questionEmbeddings);
-            double faqSimilarity = 0;
-
-            if (questionSimilarity > answerSimilarity) {
-                faqSimilarity = questionSimilarity;
-            } else {
-                faqSimilarity = answerSimilarity;
-            }
-
-            faqSimilarityMap.put(faq, faqSimilarity);
-        }
-
-        List<Faq> mostSimilarFaqs = new ArrayList<>();
-        faqSimilarityMap
-            .entrySet().stream().sorted((k1, k2) -> -k1.getValue().compareTo(k2.getValue())).limit(requestFaq.getTopK())
-            .forEach(k -> mostSimilarFaqs.add(k.getKey()));
-        return mostSimilarFaqs;
+        // TODO: implementirajte pridobivanje najbolj podobnih pogostih vprasanj oz. odgovorov glede na podano vprašanje.
+        return null;
     }
 
+    // Calculate cosine similarity between two vectors
     private double calculateCosineSimilarity(float[] vector1, float[] vector2) {
         // convert float[] to double[
         double[] doubleVector1 = new double[vector1.length];
@@ -115,7 +94,7 @@ public class FaqService {
         RealVector realVector1 = new ArrayRealVector(doubleVector1);
         RealVector realVector2 = new ArrayRealVector(doubleVector2);
 
-        // calculate cosine similarity using dot product and norms
+        // Calculate cosine similarity using dot product and norms
         double dotProduct = realVector1.dotProduct(realVector2);
         double norm1 = realVector1.getNorm();
         double norm2 = realVector2.getNorm();

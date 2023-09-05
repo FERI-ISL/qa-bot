@@ -34,15 +34,11 @@ export default function (Alpine) {
     Alpine.data("initApp", () => ({
         init() {
             console.log("init Alpine app");
-            // load model
-            this.initModel();
-            // load faqs
-            this.getFaqs();
+            // TODO: implementirajte inicializacijo aplikacije.
             this.writting = false;
         },
         async initModel() {
-            console.log("init model");
-            this.answerer = await pipeline("question-answering");
+            // TODO: implementirajte inicializacijo LLM modela.
         },
         faqs: [],
         getFaqs() {
@@ -56,23 +52,7 @@ export default function (Alpine) {
         },
         question: "",
         async askQuestion() {
-            this.messages.push({text: this.question, isBot: false});
-
-            let q = this.question;
-            this.question = "";
-
-            this.writting = true;
-
-            const contextList = await fetchy("/api/faq", "POST", {question: q});
-            let context = "";
-            for (const contextItem of contextList) {
-                context += contextItem.answer + " ";
-            }
-            
-            const answer = await this.answerer(q, context);
-            this.messages.push({text: answer.answer, isBot: true});
-
-            this.writting = false;
+            // TODO: implementirajte funckionalnost za pridobivanje in prikaz odgovora na zastavljeno vprasanje.
         }
     }));
 }

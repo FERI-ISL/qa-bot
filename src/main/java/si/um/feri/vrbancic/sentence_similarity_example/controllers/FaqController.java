@@ -27,10 +27,8 @@ public class FaqController {
     // post question and get most similar faq
     @PostMapping("/api/faq")
     public List<Faq> getMostSimilarFaq(@RequestBody RequestFaq requestFaq) {
-        if (requestFaq.getTopK() == 0) {
-            requestFaq.setTopK(1);
-        }
-        return faqService.getMostSimilarFaqs(requestFaq);
+        // TODO: implementirajte pridobivanje najbolj podobnih pogostih vprasanj oz. odgovorov.
+        return null;
     }
     
 }
