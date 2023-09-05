@@ -52,7 +52,7 @@ export default function (Alpine) {
         },
         question: "",
         async askQuestion() {
-            // TOOD: implementirajte funckionalnost za pridobivanje in prikaz odgovora na zastavljeno vprasanje.
+            // TODO: implementirajte funckionalnost za pridobivanje in prikaz odgovora na zastavljeno vprasanje.
         }
     }));
 }
