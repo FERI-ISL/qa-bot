@@ -12,7 +12,7 @@
 
 V kolikor imate na sistemu nameščeno orodje Maven ter ustrezno verzijo Jave (>=17) je zagon aplikacije enostaven preko ukazne vrstice:
 
-```mvn springboot:run```
+```mvn spring-boot:run```
 
 #### Starejša različica Jave
 
