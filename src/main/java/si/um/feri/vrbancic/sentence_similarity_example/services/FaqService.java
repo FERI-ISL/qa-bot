@@ -4,8 +4,10 @@ import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
@@ -99,6 +101,14 @@ public class FaqService {
         faqSimilarityMap
             .entrySet().stream().sorted((k1, k2) -> -k1.getValue().compareTo(k2.getValue())).limit(requestFaq.getTopK())
             .forEach(k -> mostSimilarFaqs.add(k.getKey()));
+
+        // get higheest faq from map
+        Map.Entry<Faq, Double> maxEntry = Collections.max(faqSimilarityMap.entrySet(), Map.Entry.comparingByValue());
+        System.out.println("Most similar faq: " + maxEntry.getKey().getQuestion() + "\n\t\t" + maxEntry.getKey().getAnswer() + "\n\t\tSimilarity: " + maxEntry.getValue());
+
+        if (maxEntry.getValue() < 0.25) {
+            return null;
+        }
         return mostSimilarFaqs;
     }
 

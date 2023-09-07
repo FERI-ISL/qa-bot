@@ -30,3 +30,7 @@ V orodju VS Code v kolikor še nimate, namestite vtični *Dev containers*. Po us
 Iz spustnega seznama izberite možnost *Dev Containers: Open Folder in Container...*, v izbirniku datotek poiščite projekt in ga odprite.
 
 Ob prvem zagonu traja nekaj minut, da VS Code prenese Docker sliko in znotraj slike namesti vse potrebno. Po koncu se vam odpre okno z izbranim projektom, ki teče znotraj Docker okolja.
+
+## Veliki jezikovni modeli
+
+[Povezava do uporabljenih velikih jezikovnih modelov (LLM).](https://huggingface.co/GregaVrbancic/OTS_2023)
