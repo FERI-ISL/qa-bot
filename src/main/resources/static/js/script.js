@@ -34,6 +34,10 @@ export default function (Alpine) {
     Alpine.data("initApp", () => ({
         init() {
             console.log("init Alpine app");
+            // init transformersjs env
+            //env.localModelPath="/models";
+            //env.allowLocalModels = false;
+            //env.remotePathTemplate = "GregaVrbancic/OTS_2023/resolve/main/{model}"
             // load model
             this.initModel();
             // load faqs
@@ -42,7 +46,9 @@ export default function (Alpine) {
         },
         async initModel() {
             console.log("init model");
+            //this.answerer = await pipeline("question-answering", "minilm-uncased-squad2");
             this.answerer = await pipeline("question-answering");
+            console.log("model initialized");
         },
         faqs: [],
         getFaqs() {
@@ -64,12 +70,20 @@ export default function (Alpine) {
             this.writting = true;
 
             const contextList = await fetchy("/api/faq", "POST", {question: q});
+
+            if (contextList.length === 0) {
+                this.messages.push({text: "Sorry, I don't know the answer to your question since I have not yet learn about this topic.", isBot: true});
+                this.writting = false;
+                return;
+            }
+
             let context = "";
             for (const contextItem of contextList) {
                 context += contextItem.answer + " ";
             }
-            
+            console.log(q, context);
             const answer = await this.answerer(q, context);
+            console.log(answer);
             this.messages.push({text: answer.answer, isBot: true});
 
             this.writting = false;

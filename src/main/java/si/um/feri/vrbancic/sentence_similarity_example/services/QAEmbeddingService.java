@@ -1,7 +1,5 @@
 package si.um.feri.vrbancic.sentence_similarity_example.services;
 
-import java.util.Arrays;
-
 import org.springframework.stereotype.Service;
 
 import ai.djl.huggingface.translator.TextEmbeddingTranslatorFactory;
